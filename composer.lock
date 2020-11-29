@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21a665a1eda5d8b94fb30f9dc351f408",
+    "content-hash": "9f5e06a898a4cd19c15c79424a718c9b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -120,16 +120,16 @@
         },
         {
             "name": "devesharp/php",
-            "version": "2.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/devesharp/php.git",
-                "reference": "d90b3d485049ef452f8509e1942bf017ab9c5d15"
+                "reference": "be451e32cc4128046ecf0dbd4302fb03cc997862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devesharp/php/zipball/d90b3d485049ef452f8509e1942bf017ab9c5d15",
-                "reference": "d90b3d485049ef452f8509e1942bf017ab9c5d15",
+                "url": "https://api.github.com/repos/devesharp/php/zipball/be451e32cc4128046ecf0dbd4302fb03cc997862",
+                "reference": "be451e32cc4128046ecf0dbd4302fb03cc997862",
                 "shasum": ""
             },
             "require": {
@@ -138,6 +138,7 @@
                 "php": ">=7.4"
             },
             "require-dev": {
+                "orchestra/testbench": "^6.4",
                 "phpunit/phpunit": "^9",
                 "spatie/phpunit-watcher": "^1.23"
             },
@@ -150,9 +151,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/devesharp/php/issues",
-                "source": "https://github.com/devesharp/php/tree/2.0"
+                "source": "https://github.com/devesharp/php/tree/2.1.2"
             },
-            "time": "2020-11-27T07:52:09+00:00"
+            "time": "2020-11-29T08:17:26+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -8201,7 +8202,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^7.4|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

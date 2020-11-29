@@ -9,79 +9,27 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
 
+    protected \App\Services\Auth $service;
+
+    public function __construct(\App\Services\Auth $service)
+    {
+        $this->service = $service;
     }
 
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login()
-    {
-        $credentials = request(['login', 'password']);
-
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        $user = auth()->user();
-
-        return array_merge($user->toArray(), ['access_token' => $token, 'users' => User::query()->get()]);
+    public function login(){
+        return $this->service->login();
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
+    public function me(){
+        return $this->service->me();
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+    public function logout(){
+        return $this->service->logout();
     }
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+    public function refresh(){
+        return $this->service->refresh();
     }
 }
