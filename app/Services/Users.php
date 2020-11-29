@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use Devesharp\CRUD\Exception;
 use Devesharp\CRUD\Service;
 use Devesharp\CRUD\ServiceFilterEnum;
 use Devesharp\CRUD\Transformer;
 use Devesharp\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class Users extends Service
 {
@@ -166,6 +168,26 @@ class Users extends Service
             'default',
             $receiver,
         );
+    }
+
+    /**
+     * @param \App\Models\Users $user
+     * @param array $originalData
+     * @return bool
+     * @throws Exception
+     */
+    public function changePassword(\App\Models\Users $user, array $originalData)
+    {
+        $data = $this->validator->changePassword($originalData);
+
+        if (!Hash::check($data['old_password'], $user->password)) {
+            \App\Exceptions\Exception::Exception(\App\Exceptions\Exception::PASSWORD_INCORRECT);
+        }
+
+        $user->password = Hash::make($data['new_password']);
+        $user->save();
+
+        return true;
     }
 
     /**

@@ -21,6 +21,13 @@ class Users extends Validator
             'filters.name' => 'string',
         ],
         /*
+         * Mudar senha
+         */
+        'change_password' => [
+            'old_password' => 'required|string|max:100',
+            'new_password' => 'required|string|max:100',
+        ],
+        /*
          * Mudar senha por token
          */
         'change_password_token' => [
@@ -60,5 +67,10 @@ class Users extends Validator
             $data,
             $this->getValidate('change_password_token'),
         );
+    }
+
+    public function changePassword(array $data)
+    {
+        return $this->validate($data, $this->getValidate('change_password'));
     }
 }

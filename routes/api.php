@@ -24,4 +24,7 @@ Route::group([
     Route::post('auth/logout', 'AuthController@logout');
     Route::post('auth/refresh', 'AuthController@refresh');
     Route::get('auth/me', 'AuthController@me');
+
+    // Users
+    Route::post('users/change-password', 'UsersController@changePassword');
 });
