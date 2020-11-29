@@ -166,8 +166,9 @@ return [
          * Package Service Providers...
          */
 
+        \Devesharp\Console\MakeProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        
+
         /*
          * Application Service Providers...
          */
