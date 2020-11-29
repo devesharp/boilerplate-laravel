@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Capsule\Manager;
+use Devesharp\CRUD\Repository\RepositoryMysql;
 
 /**
  * Class Users.
@@ -11,7 +11,7 @@ use Illuminate\Database\Capsule\Manager;
  * @method \App\Models\Users findById($id, $enabled = true)
  * @method \App\Models\Users findIdOrFail($id, $enabled = true)
  */
-class Users extends \Devesharp\RepositoryMysql
+class Users extends RepositoryMysql
 {
     /**
      * @var string

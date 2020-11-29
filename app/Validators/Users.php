@@ -20,6 +20,13 @@ class Users extends Validator
         'search' => [
             'filters.name' => 'string',
         ],
+        /*
+         * Mudar senha por token
+         */
+        'change_password_token' => [
+            'remember_token' => 'required|string',
+            'password' => 'required|string|max:100',
+        ],
     ];
 
 
@@ -40,5 +47,18 @@ class Users extends Validator
     public function search(array $data, $requester = null)
     {
         return $this->validate($data, $this->getValidateWithSearch('search'));
+    }
+
+    /**
+     * @param  array                   $data
+     * @throws \App\Handlers\Exception
+     * @return mixed
+     */
+    public function changePasswordByToken(array $data)
+    {
+        return $this->validate(
+            $data,
+            $this->getValidate('change_password_token'),
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -36,5 +37,23 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'code' => $e->getCode(),
+            'status_code' => $this->getExceptionHTTPStatusCode($e),
+            //'line' => app()->environment('prod') ? null : $e->getTrace(),
+        ], $this->getExceptionHTTPStatusCode($e));
+    }
+
+    protected function getExceptionHTTPStatusCode($e) {
+        if ($e instanceof AuthenticationException) {
+            return 401;
+        }
+
+        return method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
     }
 }

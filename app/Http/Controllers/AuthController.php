@@ -21,6 +21,14 @@ class AuthController extends Controller
         return $this->service->login();
     }
 
+    public function forgetPassword(){
+        return $this->service->forgetPassword(\request()->all()['login'] ?? '');
+    }
+
+    public function changePasswordByToken(){
+        return $this->service->changePasswordByToken(\request()->all());
+    }
+
     public function me(){
         return $this->service->me();
     }
