@@ -1,10 +1,15 @@
 version: '3.7'
 
 services:
-  app:
-    build: .
+  test:
+    container_name: test
+    depends_on:
+      - db
+    build:
+      target: test
+      context: .
     ports:
-      - "8001:80"
+      - "8002:80"
     volumes:
       - .env:/app/.env
   db:

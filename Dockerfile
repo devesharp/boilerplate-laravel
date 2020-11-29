@@ -11,7 +11,7 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN composer install --no-dev
 RUN composer dump-autoload -o
 
-FROM albertoammar/nginx:php-7.4.1-alpine
+FROM albertoammar/nginx:php-7.4.1-alpine as app
 
 RUN set -ex && apk --no-cache add postgresql-dev
 RUN docker-php-ext-install pdo_pgsql
@@ -19,3 +19,14 @@ RUN docker-php-ext-install pdo_pgsql
 COPY --from=build /app .
 
 RUN chown -R www-data:www-data /app
+
+
+FROM app as test
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+RUN composer install
+
+RUN apk add --no-cache openssl
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
