@@ -1,26 +1,34 @@
 FROM composer:1.9.3 as composer
 
+# ------------------------
+# Install vendor
+# ------------------------
 FROM albertoammar/nginx:php-7.4.1-alpine as build
-
 ENV COMPOSER_ALLOW_SUPERUSER=1
-
 WORKDIR /app
+
+# Build prod
 COPY . /app
 COPY ./public /app/html
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-RUN composer install --no-dev
-RUN composer dump-autoload -o
+RUN composer install --no-dev --no-scripts
 
+
+# ------------------------
+# Create App
+# ------------------------
 FROM albertoammar/nginx:php-7.4.1-alpine as app
-
 RUN set -ex && apk --no-cache add postgresql-dev
 RUN docker-php-ext-install pdo_pgsql
-
 COPY --from=build /app .
-
 RUN chown -R www-data:www-data /app
 
+RUN composer dump-autoload -o
 
+
+# ------------------------
+# Creaate Test
+# ------------------------
 FROM app as test
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN composer install
