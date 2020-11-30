@@ -15,11 +15,8 @@ class Users extends \Devesharp\CRUD\Transformer
      * @return mixed
      * @throws \Exception
      */
-    public function transform(
-        $model,
-        string $context = "default",
-        $requester = null
-    ) {
+    public function transform($model, string $context = "default", $requester = null)
+    {
         if (! $model instanceof $this->model) {
             throw new \Exception("invalid model transform");
         }

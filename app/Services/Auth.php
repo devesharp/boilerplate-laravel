@@ -60,9 +60,7 @@ class Auth
      */
     public function forgetPassword(string $login, $token = null)
     {
-        $token =
-            $token ??
-            base64_encode(uniqid(rand(), true)."-".date("YmdHis"));
+        $token = $token ?? base64_encode(uniqid(rand(), true) . "-" . date("YmdHis"));
 
         if (empty($login)) {
             Exception::Exception(Exception::NOT_FOUND_RESOURCE);
@@ -71,9 +69,7 @@ class Auth
         // Resgatar usuário
         $user = $this->repository
             ->andWhere(function (RepositoryMysql $query) use ($login) {
-                $query
-                    ->orWhereLike("login", $login)
-                    ->orWhereLike("email", $login);
+                $query->orWhereLike("login", $login)->orWhereLike("email", $login);
             })
             ->findOne();
 

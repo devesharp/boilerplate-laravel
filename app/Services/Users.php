@@ -109,12 +109,7 @@ class Users extends Service
             $data = $this->validator->update($originalData, $requester);
 
             // Treatment data
-            $resourceData = $this->treatment(
-                $requester,
-                $data,
-                $model,
-                "update"
-            );
+            $resourceData = $this->treatment($requester, $data, $model, "update");
 
             // Update Model
             $this->repository->updateById($id, $resourceData->toArray());
@@ -135,12 +130,8 @@ class Users extends Service
      * @param string $method
      * @return Collection
      */
-    public function treatment(
-        $requester,
-        Collection $requestData,
-        $currentModel,
-        string $method
-    ) {
+    public function treatment($requester, Collection $requestData, $currentModel, string $method)
+    {
         if ($method == "update") {
             return $requestData;
         } elseif ($method == "create") {
@@ -164,12 +155,7 @@ class Users extends Service
 
         $this->policy->get($receiver, $model);
 
-        return Transformer::item(
-            $model,
-            $this->transformer,
-            "default",
-            $receiver
-        );
+        return Transformer::item($model, $this->transformer, "default", $receiver);
     }
 
     /**
@@ -183,9 +169,7 @@ class Users extends Service
         $data = $this->validator->changePassword($originalData);
 
         if (! Hash::check($data["old_password"], $user->password)) {
-            \App\Exceptions\Exception::Exception(
-                \App\Exceptions\Exception::PASSWORD_INCORRECT
-            );
+            \App\Exceptions\Exception::Exception(\App\Exceptions\Exception::PASSWORD_INCORRECT);
         }
 
         $user->password = Hash::make($data["new_password"]);
@@ -210,12 +194,7 @@ class Users extends Service
         // Make query
         $query = $this->makeSearch($data, $requester);
 
-        return $this->transformerSearch(
-            $query,
-            $this->transformer,
-            "default",
-            $requester
-        );
+        return $this->transformerSearch($query, $this->transformer, "default", $requester);
     }
 
     /**

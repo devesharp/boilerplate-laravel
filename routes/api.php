@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', 'AuthController@login');
 Route::post('auth/password-recover', 'AuthController@forgetPassword');
 Route::post('auth/password-reset/{token}', 'AuthController@changePasswordByToken');
-Route::get('health', function () { return [];});
+Route::get('health', function () {
+    return [];
+});
 
 Route::group([
     'middleware' => 'auth:api',

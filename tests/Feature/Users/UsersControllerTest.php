@@ -27,12 +27,12 @@ class UsersControllerTest extends TestCase
             ],
             [
                 "Authorization" => "Bearer " . $user->access_token,
-            ]
+            ],
         );
 
         $responseData = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
-        $this->assertTrue(!!$responseData["data"]);
+        $this->assertTrue((bool) $responseData["data"]);
     }
 }

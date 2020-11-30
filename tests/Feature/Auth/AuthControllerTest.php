@@ -58,8 +58,7 @@ class AuthControllerTest extends TestCase
         $responseData = json_decode($response->getContent(), true);
 
         $response = $this->get("api/auth/me", [
-            "Authorization" =>
-                "Bearer " . $responseData["data"]["access_token"],
+            "Authorization" => "Bearer " . $responseData["data"]["access_token"],
         ]);
 
         $responseData = json_decode($response->getContent(), true);
@@ -109,7 +108,7 @@ class AuthControllerTest extends TestCase
         $responseData = json_decode($response->getContent(), true);
 
         $this->assertTrue($responseData["success"]);
-        $this->assertTrue(!!$responseData["data"]);
+        $this->assertTrue((bool) $responseData["data"]);
     }
 
     /**
@@ -127,16 +126,12 @@ class AuthControllerTest extends TestCase
         $responseData = json_decode($response->getContent(), true);
 
         $response = $this->post("api/auth/refresh", [
-            "Authorization" =>
-                "Bearer " . $responseData["data"]["access_token"],
+            "Authorization" => "Bearer " . $responseData["data"]["access_token"],
         ]);
 
         $responseDataNew = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
-        $this->assertNotEquals(
-            $responseData["data"]["access_token"],
-            $responseDataNew["data"]["access_token"]
-        );
+        $this->assertNotEquals($responseData["data"]["access_token"], $responseDataNew["data"]["access_token"]);
     }
 }

@@ -47,10 +47,7 @@ class Users extends Validator
     {
         $context = "update";
 
-        return $this->validate(
-            $data,
-            $this->removeRequiredRules($this->getValidate($context))
-        );
+        return $this->validate($data, $this->removeRequiredRules($this->getValidate($context)));
     }
 
     public function search(array $data, $requester = null)
@@ -65,10 +62,7 @@ class Users extends Validator
      */
     public function changePasswordByToken(array $data)
     {
-        return $this->validate(
-            $data,
-            $this->getValidate("change_password_token")
-        );
+        return $this->validate($data, $this->getValidate("change_password_token"));
     }
 
     public function changePassword(array $data)
