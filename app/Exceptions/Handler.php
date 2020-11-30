@@ -22,10 +22,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontFlash = [
-        'password',
-        'password_confirmation',
-    ];
+    protected $dontFlash = ["password", "password_confirmation"];
 
     /**
      * Register the exception handling callbacks for the application.
@@ -39,26 +36,32 @@ class Handler extends ExceptionHandler
         });
     }
 
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        return response()->json(['error' => 'Unauthenticated.'], 401);
+    protected function unauthenticated(
+        $request,
+        AuthenticationException $exception
+    ) {
+        return response()->json(["error" => "Unauthenticated."], 401);
     }
 
     public function render($request, Throwable $e)
     {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'code' => $e->getCode(),
-            'status_code' => $this->getExceptionHTTPStatusCode($e),
-            //'line' => app()->environment('prod') ? null : $e->getTrace(),
-        ], $this->getExceptionHTTPStatusCode($e));
+        return response()->json(
+            [
+                "error" => $e->getMessage(),
+                "code" => $e->getCode(),
+                "status_code" => $this->getExceptionHTTPStatusCode($e),
+                //'line' => app()->environment('prod') ? null : $e->getTrace(),
+            ],
+            $this->getExceptionHTTPStatusCode($e)
+        );
     }
 
-    protected function getExceptionHTTPStatusCode($e) {
+    protected function getExceptionHTTPStatusCode($e)
+    {
         if ($e instanceof AuthenticationException) {
             return 401;
         }
 
-        return method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+        return method_exists($e, "getStatusCode") ? $e->getStatusCode() : 500;
     }
 }

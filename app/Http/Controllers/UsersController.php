@@ -16,7 +16,11 @@ class UsersController extends Controller
         $this->service = $service;
     }
 
-    public function changePassword(){
-        return $this->service->changePassword(\auth()->user(), \request()->all());
+    public function changePassword()
+    {
+        return $this->service->changePassword(
+            \auth()->user(),
+            \request()->all()
+        );
     }
 }

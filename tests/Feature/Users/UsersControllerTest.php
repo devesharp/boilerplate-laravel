@@ -19,16 +19,20 @@ class UsersControllerTest extends TestCase
         $user = Users::factory()->create();
         $user->access_token = JWTAuth::fromUser($user);
 
-        $response = $this->post('api/users/change-password', [
-            'old_password' => 'password',
-            'new_password' => 'new_password',
-        ], [
-            'Authorization' => 'Bearer ' . $user->access_token
-        ]);
+        $response = $this->post(
+            "api/users/change-password",
+            [
+                "old_password" => "password",
+                "new_password" => "new_password",
+            ],
+            [
+                "Authorization" => "Bearer " . $user->access_token,
+            ]
+        );
 
         $responseData = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
-        $this->assertTrue(!!$responseData['data']);
+        $this->assertTrue(!!$responseData["data"]);
     }
 }

@@ -7,53 +7,55 @@ use Devesharp\CRUD\Validator;
 class Users extends Validator
 {
     protected array $rules = [
-        'create' => [
-            'name' => 'string|max:100|required',
-            'age' => 'numeric|required',
-            'active' => 'boolean',
+        "create" => [
+            "name" => "string|max:100|required",
+            "age" => "numeric|required",
+            "active" => "boolean",
         ],
-        'update' => [
-            '_extends' => 'create',
-            'id' => 'numeric',
+        "update" => [
+            "_extends" => "create",
+            "id" => "numeric",
         ],
         // Busca
-        'search' => [
-            'filters.name' => 'string',
+        "search" => [
+            "filters.name" => "string",
         ],
         /*
          * Mudar senha
          */
-        'change_password' => [
-            'old_password' => 'required|string|max:100',
-            'new_password' => 'required|string|max:100',
+        "change_password" => [
+            "old_password" => "required|string|max:100",
+            "new_password" => "required|string|max:100",
         ],
         /*
          * Mudar senha por token
          */
-        'change_password_token' => [
-            'remember_token' => 'required|string',
-            'password' => 'required|string|max:100',
+        "change_password_token" => [
+            "remember_token" => "required|string",
+            "password" => "required|string|max:100",
         ],
     ];
 
-
     public function create(array $data, $requester = null)
     {
-        $context = 'create';
+        $context = "create";
 
         return $this->validate($data, $this->getValidate($context));
     }
 
     public function update(array $data, $requester = null)
     {
-        $context = 'update';
+        $context = "update";
 
-        return $this->validate($data, $this->removeRequiredRules($this->getValidate($context)));
+        return $this->validate(
+            $data,
+            $this->removeRequiredRules($this->getValidate($context))
+        );
     }
 
     public function search(array $data, $requester = null)
     {
-        return $this->validate($data, $this->getValidateWithSearch('search'));
+        return $this->validate($data, $this->getValidateWithSearch("search"));
     }
 
     /**
@@ -65,12 +67,12 @@ class Users extends Validator
     {
         return $this->validate(
             $data,
-            $this->getValidate('change_password_token'),
+            $this->getValidate("change_password_token")
         );
     }
 
     public function changePassword(array $data)
     {
-        return $this->validate($data, $this->getValidate('change_password'));
+        return $this->validate($data, $this->getValidate("change_password"));
     }
 }

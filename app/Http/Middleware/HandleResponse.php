@@ -22,13 +22,13 @@ class HandleResponse
 
         if ($newRequest instanceof \Illuminate\Http\Response) {
             return response()->json([
-                'success' => true,
-                'data' => $newRequest->getContent()
+                "success" => true,
+                "data" => $newRequest->getContent(),
             ]);
-        } else if ($newRequest instanceof \Illuminate\Http\JsonResponse) {
+        } elseif ($newRequest instanceof \Illuminate\Http\JsonResponse) {
             $newRequest->setData([
-                'success' => !isset($newRequest->getData()->error),
-                'data' => $newRequest->getData()
+                "success" => !isset($newRequest->getData()->error),
+                "data" => $newRequest->getData(),
             ]);
         }
 

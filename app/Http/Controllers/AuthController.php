@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-
     protected \App\Services\Auth $service;
 
     public function __construct(\App\Services\Auth $service)
@@ -17,27 +16,33 @@ class AuthController extends Controller
         $this->service = $service;
     }
 
-    public function login(){
+    public function login()
+    {
         return $this->service->login();
     }
 
-    public function forgetPassword(){
-        return $this->service->forgetPassword(\request()->all()['login'] ?? '');
+    public function forgetPassword()
+    {
+        return $this->service->forgetPassword(\request()->all()["login"] ?? "");
     }
 
-    public function changePasswordByToken(){
+    public function changePasswordByToken()
+    {
         return $this->service->changePasswordByToken(\request()->all());
     }
 
-    public function me(){
+    public function me()
+    {
         return $this->service->me();
     }
 
-    public function logout(){
+    public function logout()
+    {
         return $this->service->logout();
     }
 
-    public function refresh(){
+    public function refresh()
+    {
         return $this->service->refresh();
     }
 }

@@ -18,27 +18,27 @@ class Users extends Service
     protected \App\Policies\Users $policy;
 
     public array $sort = [
-        'id' => [
-            'column' => 'id',
+        "id" => [
+            "column" => "id",
         ],
     ];
 
-    public string $sort_default = 'id';
+    public string $sort_default = "id";
 
     public array $filters = [
         // Filter default
-        'id' => [
-            'column' => 'id',
-            'filter' => ServiceFilterEnum::whereInt,
+        "id" => [
+            "column" => "id",
+            "filter" => ServiceFilterEnum::whereInt,
         ],
-        'name' => [
-            'column' => 'name',
-            'filter' => ServiceFilterEnum::whereContainsLike,
+        "name" => [
+            "column" => "name",
+            "filter" => ServiceFilterEnum::whereContainsLike,
         ],
         // Filter column raw
-        'full_name' => [
-            'column' => "raw:(name || ' ' || age)",
-            'filter' => ServiceFilterEnum::whereContainsExplodeString,
+        "full_name" => [
+            "column" => "raw:(name || ' ' || age)",
+            "filter" => ServiceFilterEnum::whereContainsExplodeString,
         ],
     ];
 
@@ -74,7 +74,7 @@ class Users extends Service
             $data = $this->validator->create($originalData, $requester);
 
             // Treatment data
-            $resourceData = $this->treatment($requester, $data, null, 'create');
+            $resourceData = $this->treatment($requester, $data, null, "create");
 
             // Create Model
             $model = $this->repository->create($resourceData->toArray());
@@ -95,11 +95,8 @@ class Users extends Service
      * @return mixed
      * @throws \Exception
      */
-    public function update(
-        int $id,
-        array $originalData,
-        $requester = null
-    ) {
+    public function update(int $id, array $originalData, $requester = null)
+    {
         try {
             DB::beginTransaction();
 
@@ -112,7 +109,12 @@ class Users extends Service
             $data = $this->validator->update($originalData, $requester);
 
             // Treatment data
-            $resourceData = $this->treatment($requester, $data, $model, 'update');
+            $resourceData = $this->treatment(
+                $requester,
+                $data,
+                $model,
+                "update"
+            );
 
             // Update Model
             $this->repository->updateById($id, $resourceData->toArray());
@@ -139,9 +141,9 @@ class Users extends Service
         $currentModel,
         string $method
     ) {
-        if ($method == 'update') {
+        if ($method == "update") {
             return $requestData;
-        } else if ($method == 'create') {
+        } elseif ($method == "create") {
             return $requestData;
         }
 
@@ -165,8 +167,8 @@ class Users extends Service
         return Transformer::item(
             $model,
             $this->transformer,
-            'default',
-            $receiver,
+            "default",
+            $receiver
         );
     }
 
@@ -180,11 +182,13 @@ class Users extends Service
     {
         $data = $this->validator->changePassword($originalData);
 
-        if (!Hash::check($data['old_password'], $user->password)) {
-            \App\Exceptions\Exception::Exception(\App\Exceptions\Exception::PASSWORD_INCORRECT);
+        if (!Hash::check($data["old_password"], $user->password)) {
+            \App\Exceptions\Exception::Exception(
+                \App\Exceptions\Exception::PASSWORD_INCORRECT
+            );
         }
 
-        $user->password = Hash::make($data['new_password']);
+        $user->password = Hash::make($data["new_password"]);
         $user->save();
 
         return true;
@@ -209,8 +213,8 @@ class Users extends Service
         return $this->transformerSearch(
             $query,
             $this->transformer,
-            'default',
-            $requester,
+            "default",
+            $requester
         );
     }
 
@@ -224,8 +228,8 @@ class Users extends Service
         /** @var \App\Repositories\Users $query */
         $query = parent::makeSearch($data, $requester);
 
-//        // Example Query
-//        $query->whereInt('id', 1);
+        //        // Example Query
+        //        $query->whereInt('id', 1);
 
         return $query;
     }
@@ -246,8 +250,8 @@ class Users extends Service
             // Authorization
             $this->policy->delete($requester, $model);
 
-            $this->repository->updateById($id, ['enabled' => false]);
-//            $this->repository->deleteById($id, $requester);
+            $this->repository->updateById($id, ["enabled" => false]);
+            //            $this->repository->deleteById($id, $requester);
 
             DB::commit();
 

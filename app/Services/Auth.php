@@ -30,10 +30,10 @@ class Auth
      */
     public function login()
     {
-        $credentials = request(['login', 'password']);
+        $credentials = request(["login", "password"]);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!($token = auth()->attempt($credentials))) {
+            return response()->json(["error" => "Unauthorized"], 401);
         }
 
         $user = auth()->user();
@@ -62,7 +62,7 @@ class Auth
     {
         $token =
             $token ??
-            base64_encode(uniqid(rand(), true) . '-' . date('YmdHis'));
+            base64_encode(uniqid(rand(), true) . "-" . date("YmdHis"));
 
         if (empty($login)) {
             Exception::Exception(Exception::NOT_FOUND_RESOURCE);
@@ -72,8 +72,8 @@ class Auth
         $user = $this->repository
             ->andWhere(function (RepositoryMysql $query) use ($login) {
                 $query
-                    ->orWhereLike('login', $login)
-                    ->orWhereLike('email', $login);
+                    ->orWhereLike("login", $login)
+                    ->orWhereLike("email", $login);
             })
             ->findOne();
 
@@ -83,14 +83,14 @@ class Auth
 
         // Adicionar token
         $this->repository->updateById($user->id, [
-            'remember_token' => $token,
-            'remember_token_at' => Carbon::now(),
+            "remember_token" => $token,
+            "remember_token_at" => Carbon::now(),
         ]);
 
         // Enviar email
 
         return [
-            'email' => $user->email,
+            "email" => $user->email,
         ];
     }
 
@@ -107,7 +107,7 @@ class Auth
 
         $user = $this->repository
             ->clearQuery()
-            ->whereSameString('remember_token', $data['remember_token'])
+            ->whereSameString("remember_token", $data["remember_token"])
             ->findOne();
 
         // Token não existe
@@ -116,7 +116,7 @@ class Auth
         }
 
         $user->remember_token = null;
-        $user->password = Hash::make($data['password']);
+        $user->password = Hash::make($data["password"]);
         $user->update();
 
         return true;
@@ -130,7 +130,7 @@ class Auth
         auth()->logout();
 
         return [
-            'logout' => true
+            "logout" => true,
         ];
     }
 
@@ -140,7 +140,7 @@ class Auth
     public function refresh()
     {
         return [
-            'access_token' => auth()->refresh()
+            "access_token" => auth()->refresh(),
         ];
     }
 }

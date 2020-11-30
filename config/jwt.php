@@ -10,7 +10,6 @@
  */
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | JWT Authentication Secret
@@ -25,7 +24,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET'),
+    "secret" => env("JWT_SECRET"),
 
     /*
     |--------------------------------------------------------------------------
@@ -44,8 +43,7 @@ return [
     |
     */
 
-    'keys' => [
-
+    "keys" => [
         /*
         |--------------------------------------------------------------------------
         | Public Key
@@ -57,7 +55,7 @@ return [
         |
         */
 
-        'public' => env('JWT_PUBLIC_KEY'),
+        "public" => env("JWT_PUBLIC_KEY"),
 
         /*
         |--------------------------------------------------------------------------
@@ -70,7 +68,7 @@ return [
         |
         */
 
-        'private' => env('JWT_PRIVATE_KEY'),
+        "private" => env("JWT_PRIVATE_KEY"),
 
         /*
         |--------------------------------------------------------------------------
@@ -81,8 +79,7 @@ return [
         |
         */
 
-        'passphrase' => env('JWT_PASSPHRASE'),
-
+        "passphrase" => env("JWT_PASSPHRASE"),
     ],
 
     /*
@@ -101,7 +98,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),
+    "ttl" => env("JWT_TTL", 60),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +117,7 @@ return [
     |
     */
 
-    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
+    "refresh_ttl" => env("JWT_REFRESH_TTL", 20160),
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +131,7 @@ return [
     |
     */
 
-    'algo' => env('JWT_ALGO', 'HS256'),
+    "algo" => env("JWT_ALGO", "HS256"),
 
     /*
     |--------------------------------------------------------------------------
@@ -147,14 +144,7 @@ return [
     |
     */
 
-    'required_claims' => [
-        'iss',
-        'iat',
-        'exp',
-        'nbf',
-        'sub',
-        'jti',
-    ],
+    "required_claims" => ["iss", "iat", "exp", "nbf", "sub", "jti"],
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +159,7 @@ return [
     |
     */
 
-    'persistent_claims' => [
+    "persistent_claims" => [
         // 'foo',
         // 'bar',
     ],
@@ -191,7 +181,7 @@ return [
     |
     */
 
-    'lock_subject' => true,
+    "lock_subject" => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -208,7 +198,7 @@ return [
     |
     */
 
-    'leeway' => env('JWT_LEEWAY', 0),
+    "leeway" => env("JWT_LEEWAY", 0),
 
     /*
     |--------------------------------------------------------------------------
@@ -220,7 +210,7 @@ return [
     |
     */
 
-    'blacklist_enabled' => env('JWT_BLACKLIST_ENABLED', true),
+    "blacklist_enabled" => env("JWT_BLACKLIST_ENABLED", true),
 
     /*
     | -------------------------------------------------------------------------
@@ -235,7 +225,7 @@ return [
     |
     */
 
-    'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 0),
+    "blacklist_grace_period" => env("JWT_BLACKLIST_GRACE_PERIOD", 0),
 
     /*
     |--------------------------------------------------------------------------
@@ -253,7 +243,7 @@ return [
     |
     */
 
-    'decrypt_cookies' => false,
+    "decrypt_cookies" => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -264,8 +254,7 @@ return [
     |
     */
 
-    'providers' => [
-
+    "providers" => [
         /*
         |--------------------------------------------------------------------------
         | JWT Provider
@@ -275,7 +264,7 @@ return [
         |
         */
 
-        'jwt' => Tymon\JWTAuth\Providers\JWT\Lcobucci::class,
+        "jwt" => Tymon\JWTAuth\Providers\JWT\Lcobucci::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -286,7 +275,7 @@ return [
         |
         */
 
-        'auth' => Tymon\JWTAuth\Providers\Auth\Illuminate::class,
+        "auth" => Tymon\JWTAuth\Providers\Auth\Illuminate::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -297,8 +286,6 @@ return [
         |
         */
 
-        'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
-
+        "storage" => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
     ],
-
 ];
