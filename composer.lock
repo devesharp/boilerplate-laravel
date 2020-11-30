@@ -120,16 +120,16 @@
         },
         {
             "name": "devesharp/php",
-            "version": "2.1.6",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/devesharp/php.git",
-                "reference": "9f204e8698646f19bc8104cc97d303d1fb0751e6"
+                "reference": "d5a217f4b6a7f9c0ed95dcca6f7d047a7bd3792e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devesharp/php/zipball/9f204e8698646f19bc8104cc97d303d1fb0751e6",
-                "reference": "9f204e8698646f19bc8104cc97d303d1fb0751e6",
+                "url": "https://api.github.com/repos/devesharp/php/zipball/d5a217f4b6a7f9c0ed95dcca6f7d047a7bd3792e",
+                "reference": "d5a217f4b6a7f9c0ed95dcca6f7d047a7bd3792e",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/devesharp/php/issues",
-                "source": "https://github.com/devesharp/php/tree/2.1.6"
+                "source": "https://github.com/devesharp/php/tree/2.2.3"
             },
-            "time": "2020-11-30T03:34:08+00:00"
+            "time": "2020-11-30T07:20:38+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
