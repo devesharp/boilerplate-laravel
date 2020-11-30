@@ -55,7 +55,7 @@ class Users extends Service
     }
 
     /**
-     * Create resource
+     * Create resource.
      *
      * @param array $originalData
      * @param null $requester
@@ -182,7 +182,7 @@ class Users extends Service
     {
         $data = $this->validator->changePassword($originalData);
 
-        if (!Hash::check($data["old_password"], $user->password)) {
+        if (! Hash::check($data["old_password"], $user->password)) {
             \App\Exceptions\Exception::Exception(
                 \App\Exceptions\Exception::PASSWORD_INCORRECT
             );

@@ -27,7 +27,7 @@ class HandleResponse
             ]);
         } elseif ($newRequest instanceof \Illuminate\Http\JsonResponse) {
             $newRequest->setData([
-                "success" => !isset($newRequest->getData()->error),
+                "success" => ! isset($newRequest->getData()->error),
                 "data" => $newRequest->getData(),
             ]);
         }

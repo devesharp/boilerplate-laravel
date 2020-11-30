@@ -32,7 +32,7 @@ class Auth
     {
         $credentials = request(["login", "password"]);
 
-        if (!($token = auth()->attempt($credentials))) {
+        if (! ($token = auth()->attempt($credentials))) {
             return response()->json(["error" => "Unauthorized"], 401);
         }
 
@@ -62,7 +62,7 @@ class Auth
     {
         $token =
             $token ??
-            base64_encode(uniqid(rand(), true) . "-" . date("YmdHis"));
+            base64_encode(uniqid(rand(), true)."-".date("YmdHis"));
 
         if (empty($login)) {
             Exception::Exception(Exception::NOT_FOUND_RESOURCE);

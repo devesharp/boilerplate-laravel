@@ -20,7 +20,7 @@ class Users extends \Devesharp\CRUD\Transformer
         string $context = "default",
         $requester = null
     ) {
-        if (!$model instanceof $this->model) {
+        if (! $model instanceof $this->model) {
             throw new \Exception("invalid model transform");
         }
 

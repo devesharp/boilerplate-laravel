@@ -6,27 +6,27 @@ use Devesharp\CRUD\Validator;
 
 class Users extends Validator
 {
-    function create($request)
+    public function create($request)
     {
         // \Devesharp\CRUD\Exception::Unauthorized();
     }
 
-    function update($request, $model)
+    public function update($request, $model)
     {
         // \Devesharp\CRUD\Exception::Unauthorized();
     }
 
-    function get($request, $model)
+    public function get($request, $model)
     {
         // \Devesharp\CRUD\Exception::Unauthorized();
     }
 
-    function search($request)
+    public function search($request)
     {
         // \Devesharp\CRUD\Exception::Unauthorized();
     }
 
-    function delete($request, $model)
+    public function delete($request, $model)
     {
         // \Devesharp\CRUD\Exception::Unauthorized();
     }
