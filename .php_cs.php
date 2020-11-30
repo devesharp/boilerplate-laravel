@@ -21,7 +21,7 @@ $rules = [
     ],
     'class_definition' => true,
     'concat_space' => [
-        'spacing' => 'none'
+        'spacing' => 'one'
     ],
     'declare_equal_normalize' => true,
     'elseif' => true,

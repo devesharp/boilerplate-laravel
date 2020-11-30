@@ -52,6 +52,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "lint": "yarn lint && ./vendor/bin/php-cs-fixer fix --config=.php_cs.php -v",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
