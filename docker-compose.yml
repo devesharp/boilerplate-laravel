@@ -1,17 +1,6 @@
 version: '3.7'
 
 services:
-  test:
-    container_name: test
-    depends_on:
-      - db
-    build:
-      target: test
-      context: .
-    ports:
-      - "8002:80"
-    volumes:
-      - .env:/app/.env
   db:
     image: postgres:13.0
     ports:
