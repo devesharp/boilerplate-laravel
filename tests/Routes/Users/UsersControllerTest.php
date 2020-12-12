@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Users;
+namespace Tests\Feature\Routes;
 
 use App\Models\Users;
 use App\Models\Users as UsersModel;
