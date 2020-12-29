@@ -9,4 +9,5 @@ abstract class TestCase extends BaseTestCase
 {
     use DatabaseMigrations;
     use CreatesApplication;
+    use \Devesharp\Testing\TestCase;
 }

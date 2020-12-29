@@ -5,7 +5,7 @@ watch:
     - config
     - database
     - routes
-    -   resources
+    - resources
     - tests
   fileMask: '*.php'
 notifications:
