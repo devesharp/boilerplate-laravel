@@ -11,7 +11,7 @@ services:
     ports:
       - "8002:80"
     volumes:
-      - .env:/app/.env
+      - .env.ci:/app/.env
   db:
     image: postgres:13.0
     ports:
