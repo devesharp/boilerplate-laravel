@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
                 "status_code" => $this->getExceptionHTTPStatusCode($e),
                 //'line' => app()->environment('prod') ? null : $e->getTrace(),
             ],
-            $this->getExceptionHTTPStatusCode($e),
+            $this->getExceptionHTTPreportStatusCode($e),
         );
     }
 
@@ -61,5 +61,16 @@ class Handler extends ExceptionHandler
         }
 
         return method_exists($e, "getStatusCode") ? $e->getStatusCode() : 500;
+    }
+
+    public function report(Throwable $exception)
+    {
+        if (!empty(env("SENTRY_LARAVEL_DSN"))) {
+            if ($this->shouldReport($exception) && app()->bound("sentry")) {
+                app("sentry")->captureException($exception);
+            }
+        }
+
+        parent::report($exception);
     }
 }
