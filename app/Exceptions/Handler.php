@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
                 "status_code" => $this->getExceptionHTTPStatusCode($e),
                 //'line' => app()->environment('prod') ? null : $e->getTrace(),
             ],
-            $this->getExceptionHTTPreportStatusCode($e),
+            $this->getExceptionHTTPStatusCode($e),
         );
     }
 
