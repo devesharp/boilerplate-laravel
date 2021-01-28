@@ -9,11 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    protected \App\Services\Auth $service;
-
-    public function __construct(\App\Services\Auth $service)
+    public function __construct(
+        protected \App\Services\Auth $service
+    )
     {
-        $this->service = $service;
     }
 
     public function login()

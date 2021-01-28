@@ -11,19 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class Auth
 {
-    protected \App\Transformers\Users $transformer;
-    protected \App\Repositories\Users $repository;
-    protected \App\Validators\Users $validator;
-
     public function __construct(
-        \App\Transformers\Users $transformer,
-        \App\Repositories\Users $repository,
-        \App\Validators\Users $validator
-    ) {
-        $this->transformer = $transformer;
-        $this->repository = $repository;
-        $this->validator = $validator;
-    }
+        protected \App\Transformers\Users $transformer,
+        protected \App\Repositories\Users $repository,
+        protected \App\Validators\Users $validator
+    ) {}
 
     /**
      * @return \Illuminate\Http\JsonResponse|mixed

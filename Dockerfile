@@ -1,4 +1,4 @@
-FROM composer:1.9.3 as composer
+FROM composer:2.0.8 as composer
 
 # ------------------------
 # Install vendor

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f9be813e40b50d8f7add5612c6c017e",
+    "content-hash": "d3892eef9056167e3e278053f56b4059",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -259,22 +259,22 @@
         },
         {
             "name": "devesharp/php",
-            "version": "2.3.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/devesharp/php.git",
-                "reference": "bd31d7c38f9e2d4400766829f19989fbb2c8854a"
+                "reference": "d7c6093710e4489d07fad6934d5bb601c7c25b4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devesharp/php/zipball/bd31d7c38f9e2d4400766829f19989fbb2c8854a",
-                "reference": "bd31d7c38f9e2d4400766829f19989fbb2c8854a",
+                "url": "https://api.github.com/repos/devesharp/php/zipball/d7c6093710e4489d07fad6934d5bb601c7c25b4b",
+                "reference": "d7c6093710e4489d07fad6934d5bb601c7c25b4b",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "illuminate/database": "~5.0|~6.0|~7.0|^8.0",
-                "php": ">=7.4"
+                "php": ">=8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^6.4",
@@ -290,9 +290,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/devesharp/php/issues",
-                "source": "https://github.com/devesharp/php/tree/2.3.0"
+                "source": "https://github.com/devesharp/php/tree/3.0.0"
             },
-            "time": "2020-12-29T18:35:24+00:00"
+            "time": "2021-01-28T14:54:22+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class Users extends Service
 {
-    protected \App\Validators\Users $validator;
-    protected \App\Transformers\Users $transformer;
-    protected \App\Repositories\Users $repository;
-    protected \App\Policies\Users $policy;
-
     public array $sort = [
         "id" => [
             "column" => "id",
@@ -43,15 +38,11 @@ class Users extends Service
     ];
 
     public function __construct(
-        \App\Validators\Users $validator,
-        \App\Transformers\Users $transformer,
-        \App\Repositories\Users $repository,
-        \App\Policies\Users $policy
+        protected \App\Validators\Users $validator,
+        protected \App\Transformers\Users $transformer,
+        protected \App\Repositories\Users $repository,
+        protected \App\Policies\Users $policy
     ) {
-        $this->validator = $validator;
-        $this->transformer = $transformer;
-        $this->repository = $repository;
-        $this->policy = $policy;
     }
 
     /**
