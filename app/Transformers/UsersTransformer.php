@@ -4,7 +4,7 @@ namespace App\Transformers;
 
 use Devesharp\CRUD\Transformer;
 
-class Users extends \Devesharp\CRUD\Transformer
+class UsersTransformer extends \Devesharp\CRUD\Transformer
 {
     public string $model = \App\Models\Users::class;
 

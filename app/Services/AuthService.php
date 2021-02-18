@@ -9,12 +9,12 @@ use Devesharp\CRUD\Repository\RepositoryMysql;
 use Devesharp\CRUD\Transformer;
 use Illuminate\Support\Facades\Hash;
 
-class Auth
+class AuthService
 {
     public function __construct(
-        protected \App\Transformers\Users $transformer,
-        protected \App\Repositories\Users $repository,
-        protected \App\Validators\Users $validator
+        protected \App\Transformers\UsersTransformer $transformer,
+        protected \App\Repositories\UsersRepository $repository,
+        protected \App\Validators\UsersValidator $validator
     ) {}
 
     /**

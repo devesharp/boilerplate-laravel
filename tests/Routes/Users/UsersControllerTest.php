@@ -3,9 +3,6 @@
 namespace Tests\Feature\Routes;
 
 use App\Models\Users;
-use App\Models\Users as UsersModel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
 

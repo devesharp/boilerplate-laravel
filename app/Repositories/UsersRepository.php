@@ -11,7 +11,7 @@ use Devesharp\CRUD\Repository\RepositoryMysql;
  * @method \App\Models\Users findById($id, $enabled = true)
  * @method \App\Models\Users findIdOrFail($id, $enabled = true)
  */
-class Users extends RepositoryMysql
+class UsersRepository extends RepositoryMysql
 {
     /**
      * @var string

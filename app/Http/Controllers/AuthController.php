@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
 class AuthController extends Controller
 {
     public function __construct(
-        protected \App\Services\Auth $service
+        protected \App\Services\AuthService $service
     )
     {
     }
+
 
     public function login()
     {

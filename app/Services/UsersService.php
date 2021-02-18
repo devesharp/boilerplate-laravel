@@ -10,7 +10,7 @@ use Devesharp\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class Users extends Service
+class UsersService extends Service
 {
     public array $sort = [
         "id" => [
@@ -38,10 +38,10 @@ class Users extends Service
     ];
 
     public function __construct(
-        protected \App\Validators\Users $validator,
-        protected \App\Transformers\Users $transformer,
-        protected \App\Repositories\Users $repository,
-        protected \App\Policies\Users $policy
+        protected \App\Validators\UsersValidator $validator,
+        protected \App\Transformers\UsersTransformer $transformer,
+        protected \App\Repositories\UsersRepository $repository,
+        protected \App\Policies\UsersPolicy $policy
     ) {
     }
 
@@ -191,11 +191,11 @@ class Users extends Service
     /**
      * @param $data
      * @param null $requester
-     * @return \Devesharp\CRUD\RepositoryInterface|\App\Repositories\Users
+     * @return \Devesharp\CRUD\RepositoryInterface|\App\Repositories\UsersRepository
      */
     protected function makeSearch(&$data, $requester = null)
     {
-        /** @var \App\Repositories\Users $query */
+        /** @var \App\Repositories\UsersRepository $query */
         $query = parent::makeSearch($data, $requester);
 
         //        // Example Query

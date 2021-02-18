@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use Devesharp\CRUD\Validator;
 
-class Users extends Validator
+class UsersPolicy extends Validator
 {
     public function create($request)
     {

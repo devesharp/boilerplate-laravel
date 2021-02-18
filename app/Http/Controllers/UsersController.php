@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
     public function __construct(
-        protected \App\Services\Users $service
+        protected \App\Services\UsersService $service
     ){
     }
 

@@ -3,9 +3,6 @@
 namespace Tests\Routes\Auth;
 
 use App\Models\Users;
-use App\Models\Users as UsersModel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
