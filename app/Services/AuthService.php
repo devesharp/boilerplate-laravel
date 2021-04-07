@@ -3,17 +3,20 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Users;
 use Carbon\Carbon;
 use Devesharp\CRUD\Exception;
 use Devesharp\CRUD\Repository\RepositoryMysql;
 use Devesharp\CRUD\Transformer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthService
 {
     public function __construct(
         protected \App\Transformers\UsersTransformer $transformer,
         protected \App\Repositories\UsersRepository $repository,
+        protected \App\Repositories\UsersTokensRepository $usersTokensRepository,
         protected \App\Validators\UsersValidator $validator
     ) {}
 
@@ -24,12 +27,15 @@ class AuthService
     {
         $credentials = request(["login", "password"]);
 
-        if (! ($token = auth()->attempt($credentials))) {
+        if (!($token = auth()->setTTL(60 * 60 * 24 * 365)->claims(['foo' => 'bar'])->attempt($credentials))) {
             return response()->json(["error" => "Unauthorized"], 401);
         }
 
+        /** @var Users $user */
         $user = auth()->user();
         $user->access_token = $token;
+
+        $this->createTokenForUser($user);
 
         return Transformer::item($user, $this->transformer);
     }
@@ -130,5 +136,29 @@ class AuthService
         return [
             "access_token" => auth()->refresh(),
         ];
+    }
+
+    /**
+     * @param Users $user
+     */
+    function createTokenForUser(Users $user): string {
+        $token = base64_encode(Str::uuid() . '-'. Carbon::now()->getTimestamp());
+
+        $exist = $this->usersTokensRepository
+            ->clearQuery()
+            ->whereInt('user_id', $user->id)
+            ->whereSameString('token', $token)
+            ->count();
+
+        if ($exist) {
+            return $this->createTokenForUser($user);
+        }
+
+        $this->usersTokensRepository->create([
+            'user_id' => $user->id,
+            'token' => $token,
+        ]);
+
+        return $token;
     }
 }

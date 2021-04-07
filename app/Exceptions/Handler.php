@@ -65,7 +65,10 @@ class Handler extends ExceptionHandler
 
     public function report(Throwable $exception)
     {
-        if (!empty(env("SENTRY_LARAVEL_DSN"))) {
+        /**
+         * Enviar erro para sentry
+         */
+        if (!empty(env("SENTRY_LARAVEL_DSN")) && app()->environment(['prod']) ) {
             if ($this->shouldReport($exception) && app()->bound("sentry")) {
                 app("sentry")->captureException($exception);
             }

@@ -3,6 +3,7 @@
 namespace Tests\Routes\Auth;
 
 use App\Models\Users;
+use App\Models\UsersTokens;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
@@ -45,6 +46,8 @@ class AuthControllerTest extends TestCase
      */
     public function testPrivateRoute()
     {
+        $this->withoutExceptionHandling();
+
         $user = Users::factory()->create();
 
         $response = $this->post("api/auth/login", [
@@ -64,6 +67,54 @@ class AuthControllerTest extends TestCase
         $this->assertEquals($responseData["data"]["name"], $user->name);
         $this->assertEquals($responseData["data"]["email"], $user->email);
         $this->assertEquals($responseData["data"]["login"], $user->login);
+    }
+
+    /**
+     * @testdox Não deve conseguir acessar com token com enabled = false
+     */
+    public function testPrivateRouteWithInvalidToken()
+    {
+        $user = Users::factory()->create();
+
+        $response = $this->post("api/auth/login", [
+            "login" => $user->login,
+            "password" => "password",
+        ]);
+
+        $responseData = json_decode($response->getContent(), true);
+
+        // Desabilitar tokens
+        UsersTokens::query()->update(['enabled' => false]);
+
+        $response = $this->get("api/auth/me", [
+            "Authorization" => "Bearer " . $responseData["data"]["access_token"],
+        ]);
+
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @testdox Não deve conseguir acessar quando token não existe
+     */
+    public function testPrivateRouteWithTokenNotExist()
+    {
+        $user = Users::factory()->create();
+
+        $response = $this->post("api/auth/login", [
+            "login" => $user->login,
+            "password" => "password",
+        ]);
+
+        $responseData = json_decode($response->getContent(), true);
+
+        // Desabilitar tokens
+        UsersTokens::query()->delete();
+
+        $response = $this->get("api/auth/me", [
+            "Authorization" => "Bearer " . $responseData["data"]["access_token"],
+        ]);
+
+        $response->assertStatus(401);
     }
 
     public function testAdminPasswordRecover()

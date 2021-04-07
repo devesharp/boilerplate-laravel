@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\AuthService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,6 +47,8 @@ class Users extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            't' => app(AuthService::class)->createTokenForUser($this)
+        ];
     }
 }
