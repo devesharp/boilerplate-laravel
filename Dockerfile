@@ -17,7 +17,7 @@ RUN composer dump-autoload -o
 # ------------------------
 # Create App
 # ------------------------
-FROM devesharp/nginx:php-8.0.1-alpine as app
+FROM devesharp/nginx:php-8.0-alpine as app
 RUN set -ex && apk --no-cache add postgresql-dev
 RUN docker-php-ext-install pdo_pgsql
 COPY --from=build /app .
