@@ -4,5 +4,5 @@ namespace App\Exceptions;
 
 class Exception extends \Devesharp\CRUD\Exception
 {
-    const PASSWORD_INCORRECT = 1;
+    const PASSWORD_INCORRECT = 2;
 }
