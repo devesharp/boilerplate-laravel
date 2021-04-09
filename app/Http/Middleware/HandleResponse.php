@@ -20,17 +20,20 @@ class HandleResponse
         /** @var JsonResponse $newRequest */
         $newRequest = $next($request);
 
-        if ($newRequest instanceof \Illuminate\Http\Response) {
-            return response()->json([
-                "success" => true,
-                "data" => $newRequest->getContent(),
-            ]);
-        } elseif ($newRequest instanceof \Illuminate\Http\JsonResponse) {
-            $newRequest->setData([
-                "success" => ! isset($newRequest->getData()->error),
-                "data" => $newRequest->getData(),
-            ]);
+        if ($request->is('api/*')) {
+            if ($newRequest instanceof \Illuminate\Http\Response) {
+                return response()->json([
+                    "success" => true,
+                    "data" => $newRequest->getContent(),
+                ]);
+            } elseif ($newRequest instanceof \Illuminate\Http\JsonResponse) {
+                $newRequest->setData([
+                    "success" => ! isset($newRequest->getData()->error),
+                    "data" => $newRequest->getData(),
+                ]);
+            }
         }
+
 
         return $newRequest;
     }

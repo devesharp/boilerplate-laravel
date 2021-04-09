@@ -28,7 +28,7 @@ class AuthService
         $credentials = request(["login", "password"]);
 
         if (!($token = auth()->setTTL(60 * 60 * 24 * 365)->claims(['foo' => 'bar'])->attempt($credentials))) {
-            return response()->json(["error" => "Unauthorized"], 401);
+            return response()->json(["error" => "Login ou senha incorretos"], 401);
         }
 
         /** @var Users $user */
