@@ -60,6 +60,12 @@ class Handler extends ExceptionHandler
             return 401;
         }
 
+        if ($e instanceof \Devesharp\CRUD\Exception) {
+            if($e->getCode() === \Devesharp\CRUD\Exception::TOKEN_INVALID){
+                return 401;
+            }
+        }
+
         return method_exists($e, "getStatusCode") ? $e->getStatusCode() : 500;
     }
 
