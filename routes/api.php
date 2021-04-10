@@ -21,6 +21,16 @@ Route::get('health', function () {
     return [];
 });
 
+Route::post('upload-image-s3', function () {
+    $file = request()->file('file');
+    $path = \Illuminate\Support\Facades\Storage::disk('s3')->put('images', $file);
+    $modelS3 = \App\Models\S3Files::query()->create([
+        'path' => $path,
+        'size' => $file->getSize(),
+    ]);
+    return $modelS3->toArray();
+});
+
 Route::group([
     'middleware' => 'auth:api',
 ], function ($router) {
