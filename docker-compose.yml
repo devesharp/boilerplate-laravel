@@ -2,9 +2,17 @@ version: '3.7'
 
 services:
   db:
-    image: postgres:13.0
+    image: devesharp/mariadb:10.6.1
     ports:
-      - "15432:5432"
+      - 3307:3306
     environment:
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: develop
+      MYSQL_ROOT_PASSWORD: 123456
+      MARIADB_MULTIPLE_DATABASE: develop,testing
+  # PHPMYADMIN
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports: ['9024:80']
+    environment:
+      - 'PMA_HOST=db'
+      - 'PMA_USER=root'
+      - 'PMA_PASSWORD=123456'
