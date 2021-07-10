@@ -26,7 +26,7 @@ jobs:
             run: docker-compose -f docker-compose.test.yml up -d --build
 
          -  name: Wait database start
-            run: docker exec test dockerize -wait tcp://db:5432 -timeout 30s
+            run: docker exec test dockerize -wait tcp://db:3306 -timeout 30s
             continue-on-error: true
 
          -  name: Testing
