@@ -7,9 +7,19 @@ FROM devesharp/nginx:php-8.0.1-alpine as build
 ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /app
 
+# Convert .env
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 # Build prod
 COPY . /app
 COPY ./public /app/html
+
+#
+RUN dockerize -template .env.example:.env
+
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN composer install --no-dev --no-scripts
 RUN composer dump-autoload -o
