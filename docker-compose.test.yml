@@ -3,8 +3,8 @@ version: '3.7'
 services:
   test:
     container_name: test
-#    depends_on:
-#      - db
+    depends_on:
+      - db
     build:
       target: test
       context: .
@@ -17,8 +17,8 @@ services:
       DB_DATABASE: develop
       DB_USERNAME: root
       DB_PASSWORD: 123456
-#  db:
-#    image: devesharp/mariadb:10.6.1
-#    environment:
-#      MYSQL_ROOT_PASSWORD: 123456
-#      MARIADB_MULTIPLE_DATABASE: develop,testing
+  db:
+    image: devesharp/mariadb:10.6.1
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MARIADB_MULTIPLE_DATABASE: develop,testing
