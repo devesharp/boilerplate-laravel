@@ -1,7 +1,5 @@
 <?php
 
-var_dump(env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')));
-
 return [
 
     'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
