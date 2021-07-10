@@ -10,13 +10,8 @@ services:
       context: .
     ports:
       - "8002:80"
-    environment:
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: develop
-      DB_USERNAME: root
-      DB_PASSWORD: 123456
+    volumes:
+      - .env.ci:/app/.env
   db:
     image: devesharp/mariadb:10.6.1
     environment:
