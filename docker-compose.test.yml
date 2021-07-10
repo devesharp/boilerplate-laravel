@@ -19,8 +19,6 @@ services:
       DB_PASSWORD: 123456
   db:
     image: devesharp/mariadb:10.6.1
-    ports:
-      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MARIADB_MULTIPLE_DATABASE: develop,testing
