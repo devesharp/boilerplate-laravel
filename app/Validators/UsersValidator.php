@@ -9,16 +9,22 @@ class UsersValidator extends Validator
     protected array $rules = [
         "create" => [
             "name" => "string|max:100|required",
-            "age" => "numeric|required",
-            "active" => "boolean",
+            "login" => "string|max:100|required",
+            "email" => "string|max:100|required",
+            "password" => "string|max:100|required",
+            "document" => "string|max:100",
+            "image" => "string|max:100",
         ],
         "update" => [
             "_extends" => "create",
             "id" => "numeric",
+            "password" => null,
         ],
         // Busca
         "search" => [
+            "filters.id" => "numeric",
             "filters.name" => "string",
+            "filters.noGetMe" => "boolean",
         ],
         /*
          * Mudar senha

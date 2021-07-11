@@ -198,8 +198,9 @@ class UsersService extends Service
         /** @var \App\Repositories\UsersRepository $query */
         $query = parent::makeSearch($data, $requester);
 
-        //        // Example Query
-        //        $query->whereInt('id', 1);
+        if(isset($data['filters.noGetMe']) && !empty($data['filters.noGetMe'])) {
+            $query->whereNotInt('id', $requester->id);
+        }
 
         return $query;
     }

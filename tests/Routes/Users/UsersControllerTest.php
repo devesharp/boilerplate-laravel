@@ -11,7 +11,7 @@ class UsersControllerTest extends TestCase
     /**
      * @testdox Realizar login
      */
-    public function testAuthLogin()
+    public function testUserChangePassword()
     {
         $user = Users::factory()->create();
         $user->access_token = JWTAuth::fromUser($user);

@@ -40,6 +40,12 @@ Route::group([
 
     // Users
     Route::post('users/change-password', 'UsersController@changePassword');
+
+    Route::post('users/search', 'UsersController@search');
+    Route::get('users/{id}', 'UsersController@get');
+    Route::post('users/{id}', 'UsersController@update');
+    Route::post('users', 'UsersController@create');
+    Route::delete('users/{id}', 'UsersController@delete');
 });
 
 //Route::post('events/search', 'EventsController@search');
