@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "394c50b1de08f43b00cc934514c00310",
+    "content-hash": "818822ba71bc7fa47aa8afa98436c511",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -276,16 +276,16 @@
         },
         {
             "name": "devesharp/php",
-            "version": "3.1.1",
+            "version": "3.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/devesharp/php.git",
-                "reference": "b8400017119f5b419d09450f60a635255811cb28"
+                "reference": "fd72178146532c0cc99d7c903056c36e75aa8724"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devesharp/php/zipball/b8400017119f5b419d09450f60a635255811cb28",
-                "reference": "b8400017119f5b419d09450f60a635255811cb28",
+                "url": "https://api.github.com/repos/devesharp/php/zipball/fd72178146532c0cc99d7c903056c36e75aa8724",
+                "reference": "fd72178146532c0cc99d7c903056c36e75aa8724",
                 "shasum": ""
             },
             "require": {
@@ -307,9 +307,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/devesharp/php/issues",
-                "source": "https://github.com/devesharp/php/tree/3.1.1"
+                "source": "https://github.com/devesharp/php/tree/3.1.11"
             },
-            "time": "2021-04-08T05:30:28+00:00"
+            "time": "2021-07-11T10:42:12+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -10295,5 +10295,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
