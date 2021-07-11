@@ -47,9 +47,3 @@ Route::group([
     Route::post('users', 'UsersController@create');
     Route::delete('users/{id}', 'UsersController@delete');
 });
-
-//Route::post('events/search', 'EventsController@search');
-//Route::get('events/{id}', 'EventsController@get');
-//Route::post('events/{id}', 'EventsController@update');
-//Route::post('events', 'EventsController@create');
-//Route::delete('events/{id}', 'EventsController@delete');
