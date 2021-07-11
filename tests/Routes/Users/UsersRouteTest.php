@@ -79,6 +79,9 @@ class UsersRouteTest extends TestCase
         $user->access_token = JWTAuth::fromUser($user);
         $resource = Users::factory()->create();
 
+        var_dump($resource->present()->fullName);
+
+
         $response = $this->post('api/users/search', [
             'filters' => [
                 'noGetMe' => true
