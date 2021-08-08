@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Users;
 
+use App\Interfaces\RolesEnum;
 use App\Models\Users;
+use App\Services\UsersPermissionsService;
 use Tests\TestCase;
 
 class UsersTest extends TestCase
@@ -23,6 +25,7 @@ class UsersTest extends TestCase
     public function testCreateUsers()
     {
         $userAdmin = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($userAdmin, RolesEnum::ADMIN());
         $UsersData = Users::factory()->raw();
 
         $resource = $this->service->create($UsersData, $userAdmin);
@@ -37,6 +40,7 @@ class UsersTest extends TestCase
     public function testUpdateUsers()
     {
         $userAdmin = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($userAdmin, RolesEnum::ADMIN());
         $UsersData = Users::factory()->raw();
 
         $resource = $this->service->create($UsersData, $userAdmin);
@@ -54,6 +58,7 @@ class UsersTest extends TestCase
     public function testGetUsers()
     {
         $userAdmin = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($userAdmin, RolesEnum::ADMIN());
         $UsersData = Users::factory()->raw();
 
         $resourceCreated = $this->service->create($UsersData, $userAdmin);
@@ -70,6 +75,7 @@ class UsersTest extends TestCase
     public function testSearchUsers()
     {
         $userAdmin = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($userAdmin, RolesEnum::ADMIN());
         Users::factory()->count(5)->create();
 
         $results = $this->service->search([
@@ -87,6 +93,7 @@ class UsersTest extends TestCase
     public function testDeleteUsers()
     {
         $userAdmin = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($userAdmin, RolesEnum::ADMIN());
         $UsersData = Users::factory()->raw();
 
         $resource = $this->service->create($UsersData, $userAdmin);

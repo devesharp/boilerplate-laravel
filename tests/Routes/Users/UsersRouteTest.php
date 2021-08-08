@@ -2,7 +2,9 @@
 
 namespace Tests\Routes\Users;
 
+use App\Interfaces\RolesEnum;
 use App\Models\Users;
+use App\Services\UsersPermissionsService;
 use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -14,6 +16,8 @@ class UsersRouteTest extends TestCase
     public function testRouteUsersCreate()
     {
         $user = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($user, RolesEnum::ADMIN());
+
         $user->access_token = JWTAuth::fromUser($user);
         $UsersData = Users::factory()->raw();
 
@@ -34,6 +38,8 @@ class UsersRouteTest extends TestCase
     public function testRouteUsersUpdate()
     {
         $user = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($user, RolesEnum::ADMIN());
+
         $user->access_token = JWTAuth::fromUser($user);
         $UsersData = Users::factory()->raw();
         $resource = Users::factory()->create();
@@ -55,6 +61,8 @@ class UsersRouteTest extends TestCase
     public function testRouteUsersGet()
     {
         $user = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($user, RolesEnum::ADMIN());
+
         $user->access_token = JWTAuth::fromUser($user);
 
         $resource = Users::factory()->create();
@@ -76,11 +84,10 @@ class UsersRouteTest extends TestCase
     public function testRouteUsersSearch()
     {
         $user = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($user, RolesEnum::ADMIN());
+
         $user->access_token = JWTAuth::fromUser($user);
         $resource = Users::factory()->create();
-
-        var_dump($resource->present()->fullName);
-
 
         $response = $this->post('api/users/search', [
             'filters' => [
@@ -103,6 +110,8 @@ class UsersRouteTest extends TestCase
     public function testRouteUsersDelete()
     {
         $user = Users::factory()->create();
+        app(UsersPermissionsService::class)->setPermissionDefault($user, RolesEnum::ADMIN());
+
         $user->access_token = JWTAuth::fromUser($user);
 
         $resource = Users::factory()->create();
