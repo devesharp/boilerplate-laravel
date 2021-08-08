@@ -14,6 +14,7 @@ class UsersValidator extends Validator
             "password" => "string|max:100|required",
             "document" => "string|max:100",
             "image" => "string|max:100",
+            'permissions' => 'array',
         ],
         "update" => [
             "_extends" => "create",

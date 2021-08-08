@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Utils\UsersRolesEnum;
 use Devesharp\CRUD\Exception;
 use Devesharp\CRUD\Service;
 use Devesharp\CRUD\ServiceFilterEnum;
 use Devesharp\CRUD\Transformer;
 use Devesharp\Support\Collection;
+use Devesharp\Support\Helpers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,6 +43,7 @@ class UsersService extends Service
         protected \App\Validators\UsersValidator $validator,
         protected \App\Transformers\UsersTransformer $transformer,
         protected \App\Repositories\UsersRepository $repository,
+        protected UsersPermissionsService $usersPermissionsService,
         protected \App\Policies\UsersPolicy $policy
     ) {
     }
@@ -67,8 +70,11 @@ class UsersService extends Service
             // Treatment data
             $resourceData = $this->treatment($requester, $data, null, "create");
 
-            // Create Model
-            $model = $this->repository->create($resourceData->toArray());
+            // Criar Usuário
+            $model = $this->repository->create(Helpers::arrayExclude($resourceData->toArray(), ['permissions']));
+
+            // Adiciona permissões dos usuários
+            $this->usersPermissionsService->setPermissions($model, $resourceData['permissions'] ?? []);
 
             DB::commit();
 
@@ -102,8 +108,11 @@ class UsersService extends Service
             // Treatment data
             $resourceData = $this->treatment($requester, $data, $model, "update");
 
-            // Update Model
-            $this->repository->updateById($id, $resourceData->toArray());
+            // Atualizar modelo
+            $this->repository->updateById($id, \Devesharp\Support\Helpers::arrayExclude($data->toArray(), 'permissions'));
+
+            // Atualiza permissões dos usuários
+            $this->usersPermissionsService->setPermissions($model, $resourceData['permissions'] ?? []);
 
             DB::commit();
 
@@ -124,8 +133,20 @@ class UsersService extends Service
     public function treatment($requester, Collection $requestData, $currentModel, string $method)
     {
         if ($method == "update") {
+            if (! empty($requestData['permissions'])) {
+                $requestData['permissions'] = $this->usersPermissionsService->permissionGiverUsersChecker(
+                    $requestData['permissions'] ?? [],
+                    $this->usersPermissionsService->getPermissions($requester),
+                );
+            }
+
             return $requestData;
         } elseif ($method == "create") {
+
+            $requestData['permissions'] = $this->usersPermissionsService->getDefaultPermissions(
+                \App\Interfaces\RolesEnum::SIMPLE(),
+            );
+
             return $requestData;
         }
 

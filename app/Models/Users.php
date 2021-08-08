@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Presenters\UsersPresenter;
 use App\Services\AuthService;
+use App\Services\UsersPermissionsService;
 use Devesharp\CRUD\Presenter\PresentableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,6 +34,15 @@ class Users extends Authenticatable implements JWTSubject
         "deleted_at" => "datetime",
     ];
 
+
+    /**
+     * @param string|array $permissionCheck
+     * @return bool
+     */
+    function hasPermission(string | array $permissionCheck): bool {
+        return app(UsersPermissionsService::class)->hasPermission($this, $permissionCheck);
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -53,5 +63,13 @@ class Users extends Authenticatable implements JWTSubject
         return [
             't' => app(AuthService::class)->createTokenForUser($this)
         ];
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function permissions()
+    {
+        return $this->hasMany(UsersPermissions::class, 'user_id', 'id');
     }
 }

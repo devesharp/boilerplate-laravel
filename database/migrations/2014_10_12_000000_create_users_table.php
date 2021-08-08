@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->boolean('enabled')->default(true);
             $table->string('name');
-            $table->string('role')->default('user');
+            $table->string('role')->default(\App\Interfaces\RolesEnum::SIMPLE()->getValue());
             $table->string('login');
             $table->string('email')->unique();
             $table->string('password');

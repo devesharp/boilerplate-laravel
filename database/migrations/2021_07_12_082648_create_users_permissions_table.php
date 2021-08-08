@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTokensTable extends Migration
+class CreateUsersPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateUsersTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_tokens', function (Blueprint $table) {
+        Schema::create('users_permissions', function (Blueprint $table) {
             $table->id();
-            $table->boolean('enabled')->default(true);
             $table->unsignedBigInteger('user_id');
-            $table->mediumText('token');
-            $table->timestamp('used_at')->nullable();
+            $table->string('name');
+            $table->boolean('value');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
@@ -32,6 +31,6 @@ class CreateUsersTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_tokens');
+        Schema::dropIfExists('users_permissions');
     }
 }

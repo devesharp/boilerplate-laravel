@@ -16,3 +16,9 @@ services:
       - 'PMA_HOST=db'
       - 'PMA_USER=root'
       - 'PMA_PASSWORD=123456'
+#  # Regis
+#  redis:
+#    image: redis:6.0.5
+#    ports: ["9025:6379"]
+#    environment:
+#      - "appendonly=yes"
