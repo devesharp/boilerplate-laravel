@@ -31,7 +31,7 @@ class UsersTest extends TestCase
         $resource = $this->service->create($UsersData, $userAdmin);
 
         $this->assertGreaterThanOrEqual(1, $resource['id']);
-        $this->assertEqualsArrayLeft($UsersData, $resource);
+        $this->assertEqualsArrayLeft(\Illuminate\Support\Arr::except($UsersData, ['password']), $resource);
     }
 
     /**
@@ -49,7 +49,7 @@ class UsersTest extends TestCase
 
         $resourceUpdated = $this->service->update($resource['id'], $UsersDataUpdate, $userAdmin);
 
-        $this->assertEqualsArrayLeft($UsersDataUpdate, $resourceUpdated);
+        $this->assertEqualsArrayLeft(\Illuminate\Support\Arr::except($UsersDataUpdate, ['password']), $resourceUpdated);
     }
 
     /**
@@ -66,7 +66,7 @@ class UsersTest extends TestCase
         $resource = $this->service->get($resourceCreated['id'], $userAdmin);
 
         $this->assertGreaterThanOrEqual(1, $resource['id']);
-        $this->assertEqualsArrayLeft($UsersData, $resource);
+        $this->assertEqualsArrayLeft(\Illuminate\Support\Arr::except($UsersData, ['password']), $resource);
     }
 
     /**

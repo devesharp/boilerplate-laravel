@@ -6,7 +6,7 @@ use App\Models\Users;
 use App\Models\UsersTokens;
 use Tests\TestCase;
 
-class AuthControllerTest extends TestCase
+class AuthRoutesTest extends TestCase
 {
     /**
      * @testdox Realizar login
@@ -15,11 +15,15 @@ class AuthControllerTest extends TestCase
     {
         $user = Users::factory()->create();
 
-        $response = $this->post("api/auth/login", [
-            "login" => $user->login,
-            "password" => "password",
+        $response = $this->withPost([
+            'name' => 'Realizar Login',
+            'group' => ['Auth'],
+            'uri' => 'api/auth/login',
+            'data' => [
+                "login" => $user->login,
+                "password" => "password",
+            ]
         ]);
-
         $responseData = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
@@ -33,9 +37,17 @@ class AuthControllerTest extends TestCase
     {
         $user = Users::factory()->create();
 
-        $response = $this->post("api/auth/login", [
-            "login" => $user->login,
-            "password" => "password123",
+        $response = $this->withPost([
+            'name' => 'Realizar Login',
+            'group' => ['Auth'],
+            'uri' => 'api/auth/login',
+            'data' => [
+                "login" => $user->login,
+                "password" => "password123",
+            ],
+            'response' => [
+              'description' => 'Não autorizado'
+            ]
         ]);
 
         $response->assertStatus(401);
@@ -121,8 +133,13 @@ class AuthControllerTest extends TestCase
     {
         $user = Users::factory()->create();
 
-        $response = $this->post("api/auth/password-recover", [
-            "login" => $user->login,
+        $response = $this->withPost([
+            'name' => 'Gerar token de recuperar senha',
+            'group' => ['Auth'],
+            'uri' => 'api/auth/password-recover',
+            'data' => [
+                "login" => $user->login
+            ]
         ]);
 
         $responseData = json_decode($response->getContent(), true);
@@ -133,8 +150,16 @@ class AuthControllerTest extends TestCase
 
     public function testAdminPasswordRecoverError()
     {
-        $response = $this->post("api/auth/password-recover", [
-            "login" => "login",
+        $response = $this->withPost([
+            'name' => 'Gerar token de recuperar senha',
+            'group' => ['Auth'],
+            'uri' => 'api/auth/password-recover',
+            'data' => [
+                "login" => "john"
+            ],
+            'response' => [
+                'description' => 'Login incorreto'
+            ]
         ]);
 
         $responseData = json_decode($response->getContent(), true);
@@ -148,9 +173,14 @@ class AuthControllerTest extends TestCase
             "remember_token" => "remember_token",
         ]);
 
-        $response = $this->post("api/auth/password-reset/remember_token", [
-            "remember_token" => "remember_token",
-            "password" => "123456",
+        $response =  $this->withPost([
+            'name' => 'Mudar senha com token de recuperar senha',
+            'group' => ['Auth'],
+            'uri' => 'api/auth/password-reset/remember_token',
+            'data' => [
+                "remember_token" => "remember_token",
+                "password" => "123456",
+            ]
         ]);
 
         $responseData = json_decode($response->getContent(), true);

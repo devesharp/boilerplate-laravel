@@ -43,13 +43,18 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        return response()->json(
-            [
-                "error" => $e->getMessage(),
-                "code" => $e->getCode(),
-                "status_code" => $this->getExceptionHTTPStatusCode($e),
-                'line' => app()->environment('prod') ? null : $e->getTrace(),
-            ],
+        $data = [
+            "error" => $e->getMessage(),
+            "code" => $e->getCode(),
+            "status_code" => $this->getExceptionHTTPStatusCode($e),
+        ];
+
+        if (!app()->environment('prod', 'testing')) {
+            $data['line'] = $e->getTrace();
+        }
+
+
+        return response()->json($data,
             $this->getExceptionHTTPStatusCode($e),
         );
     }

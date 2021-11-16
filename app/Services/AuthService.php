@@ -92,7 +92,7 @@ class AuthService
      * Mudar Senha da conta pelo token de esqueci a Senha.
      *
      * @param array $data
-     * @return bool
+     * @return bool[]
      * @throws Exception
      */
     public function changePasswordByToken(array $data)
@@ -113,7 +113,9 @@ class AuthService
         $user->password = Hash::make($data["password"]);
         $user->update();
 
-        return true;
+        return [
+            'changed' => true
+        ];
     }
 
     /**

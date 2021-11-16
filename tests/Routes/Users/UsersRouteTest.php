@@ -21,15 +21,21 @@ class UsersRouteTest extends TestCase
         $user->access_token = JWTAuth::fromUser($user);
         $UsersData = Users::factory()->raw();
 
-        $response = $this->post('api/users', $UsersData, [
-            'Authorization' => 'Bearer ' . $user->access_token
+        $response = $this->withPost([
+            'name' => 'Criar usuário',
+            'group' => ['Users'],
+            'uri' => 'api/users',
+            'data' => $UsersData,
+            'headers' => [
+                'Authorization' => 'Bearer ' . $user->access_token
+            ]
         ]);
 
         $responseData = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
         $this->assertTrue($responseData['success']);
-        $this->assertEqualsArrayLeft($UsersData, $responseData['data']);
+        $this->assertEqualsArrayLeft(\Illuminate\Support\Arr::except($UsersData, ['password']), $responseData['data']);
     }
 
     /**
@@ -44,15 +50,27 @@ class UsersRouteTest extends TestCase
         $UsersData = Users::factory()->raw();
         $resource = Users::factory()->create();
 
-        $response = $this->post('api/users/' . $resource->id, $UsersData, [
-            'Authorization' => 'Bearer ' . $user->access_token
+        $response = $this->withPost([
+            'name' => 'Atualizar usuário',
+            'group' => ['Users'],
+            'uri' => 'api/users/:id',
+            'params' => [
+                [
+                    'name' => 'id',
+                    'value' => $resource->id,
+                ]
+            ],
+            'data' => $UsersData,
+            'headers' => [
+                'Authorization' => 'Bearer ' . $user->access_token
+            ]
         ]);
 
         $responseData = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
         $this->assertTrue($responseData['success']);
-        $this->assertEqualsArrayLeft($UsersData, $responseData['data']);
+        $this->assertEqualsArrayLeft(\Illuminate\Support\Arr::except($UsersData, ['password']), $responseData['data']);
     }
 
     /**
@@ -67,15 +85,26 @@ class UsersRouteTest extends TestCase
 
         $resource = Users::factory()->create();
 
-        $response = $this->get('api/users/' . $resource->id, [
-            'Authorization' => 'Bearer ' . $user->access_token
+        $response = $this->withGet([
+            'name' => 'Resgatar usuário',
+            'group' => ['Users'],
+            'uri' => 'api/users/:id',
+            'params' => [
+                [
+                    'name' => 'id',
+                    'value' => $resource->id,
+                ]
+            ],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $user->access_token
+            ]
         ]);
 
         $responseData = json_decode($response->getContent(), true);
 
         $response->assertStatus(200);
         $this->assertTrue($responseData['success']);
-        $this->assertEqualsArrayLeft($resource->getAttributes(), $responseData['data']);
+        $this->assertEqualsArrayLeft(\Illuminate\Support\Arr::except($resource->getAttributes(), ['password', 'id']), $responseData['data']);
     }
 
     /**
@@ -89,12 +118,20 @@ class UsersRouteTest extends TestCase
         $user->access_token = JWTAuth::fromUser($user);
         $resource = Users::factory()->create();
 
-        $response = $this->post('api/users/search', [
-            'filters' => [
-                'noGetMe' => true
-            ]
-        ], [
-            'Authorization' => 'Bearer ' . $user->access_token
+        $response = $this->withPost([
+            'name' => 'Buscar usuários',
+            'group' => ['Users'],
+            'uri' => 'api/users/search',
+            'data' => [
+                'filters' => [
+                    'noGetMe' => true
+                ]
+            ],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $user->access_token
+            ],
+            'validatorClass' => \App\Validators\UsersValidator::class,
+            'validatorMethod' => 'search',
         ]);
 
         $responseData = json_decode($response->getContent(), true);
@@ -116,8 +153,21 @@ class UsersRouteTest extends TestCase
 
         $resource = Users::factory()->create();
 
-        $response = $this->delete('api/users/' . $resource->id, [], [
-            'Authorization' => 'Bearer ' . $user->access_token
+        $response = $this->withDelete([
+            'name' => 'Deletar usuários',
+            'group' => ['Users'],
+            'uri' => 'api/users/:id',
+            'params' => [
+                [
+                    'name' => 'id',
+                    'value' => $resource->id,
+                ]
+            ],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $user->access_token
+            ],
+            'validatorClass' => \App\Validators\UsersValidator::class,
+            'validatorMethod' => 'delete',
         ]);
 
         $responseData = json_decode($response->getContent(), true);
@@ -125,5 +175,31 @@ class UsersRouteTest extends TestCase
         $response->assertStatus(200);
         $this->assertTrue($responseData['success']);
         $this->assertTrue(!!$responseData['data']);
+    }
+
+    public function testUserChangePassword()
+    {
+        $user = Users::factory()->create();
+        $user->access_token = JWTAuth::fromUser($user);
+
+        $response = $this->withPost([
+            'name' => 'Trocar senha',
+            'group' => ['Users'],
+            'uri' => "api/users/change-password",
+            'data' => [
+                "old_password" => "password",
+                "new_password" => "new_password",
+            ],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $user->access_token
+            ],
+            'validatorClass' => \App\Validators\UsersValidator::class,
+            'validatorMethod' => 'delete',
+        ]);
+
+        $responseData = json_decode($response->getContent(), true);
+
+        $response->assertStatus(200);
+        $this->assertTrue((bool) $responseData["data"]);
     }
 }

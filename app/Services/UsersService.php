@@ -228,9 +228,9 @@ class UsersService extends Service
 
     /**
      * @param $id
-     * @param $requester
-     * @return bool
-     * @throws \Devesharp\CRUD\Exception
+     * @param null $requester
+     * @return int[]
+     * @throws Exception
      */
     public function delete($id, $requester = null)
     {
@@ -247,7 +247,9 @@ class UsersService extends Service
 
             DB::commit();
 
-            return true;
+            return [
+                'deleted' => 1
+            ];
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
